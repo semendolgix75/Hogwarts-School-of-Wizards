@@ -55,4 +55,13 @@ public class StudentController {
     public ResponseEntity<Collection<Student>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
+    @GetMapping("age/{age}")
+    public ResponseEntity<Collection<Student>> getStudentByAge(@PathVariable int age) {
+
+
+        if (studentService.getStudentByAge(age) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentService.getStudentByAge(age));
+    }
 }

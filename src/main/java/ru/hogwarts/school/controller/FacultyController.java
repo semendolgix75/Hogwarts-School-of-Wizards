@@ -48,4 +48,13 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getAllFaculty() {
         return ResponseEntity.ok(facultyService.getAllFaculty());
     }
+    @GetMapping("color/{color}")
+    public ResponseEntity<Collection<Faculty>> getFacultyByAge(@PathVariable String color) {
+
+
+        if (facultyService.getFacultyByColor(color) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(facultyService.getFacultyByColor(color));
+    }
 }
