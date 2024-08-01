@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
-import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
 
@@ -48,8 +47,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public Student delete(@PathVariable Long id) {
-        return studentService.delete(id);
+    public ResponseEntity delete(@PathVariable Long id) {
+        studentService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
    @GetMapping
