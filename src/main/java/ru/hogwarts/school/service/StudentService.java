@@ -11,7 +11,7 @@ public interface StudentService {
 
     Student update(Long id, Student student);
 
-    Student delete(long id);
+    void delete(long id);
 
     Collection<Student> getAllStudents();
 
