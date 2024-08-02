@@ -21,12 +21,12 @@ public class StudentController {
     {
         this.studentService = studentService;
     }
-    @PostMapping
+    @PostMapping    // GET http://localhost:8080/students
     public Student create(@RequestBody Student student) {
         return studentService.create(student);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{id}") // GET http://localhost:8080/students/1
     public ResponseEntity<Student> read(@PathVariable Long id) {
 
         Student studentRead = studentService.read(id);
@@ -37,7 +37,7 @@ public class StudentController {
     }
 
 
-    @PutMapping ("{id}")
+    @PutMapping("{id}") // PUT http://localhost:8080/students
     public ResponseEntity<Student> update(@PathVariable Long id, @RequestBody Student student) {
         Student editStudent = studentService.update (id,student);
         if (editStudent == null) {
@@ -64,5 +64,10 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentService.filterByAge(age));
+    }
+
+    @GetMapping("findStudentAgeBetween")
+    public Collection<Student> findStudentAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
+        return studentService.findByAgeBetween(minAge, maxAge);
     }
 }
