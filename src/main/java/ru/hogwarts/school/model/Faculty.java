@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 
 import java.util.List;
 import java.util.Objects;
+
 @Entity
 public class Faculty {
 
@@ -16,20 +17,27 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
+
     public Faculty(Long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
+
     public Faculty() {
     }
 
-//    @OneToMany(mappedBy = "faculty")
-//    @JsonIgnore
-//    private List<Student> students;
-//    public List<Student> getStudents() {
-//        return students;
-//    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "faculty")
+    private List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 
     public Long getId() {
         return id;
@@ -66,5 +74,6 @@ public class Faculty {
     public int hashCode() {
         return Objects.hash(id, name, color);
     }
+
 
 }

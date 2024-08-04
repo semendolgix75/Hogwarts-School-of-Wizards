@@ -62,4 +62,11 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> findAllByNameIgnoreCaseOrColorIgnoreCase(String name, String color) {
         return facultyRepository.findAllByNameIgnoreCaseOrColorIgnoreCase(name,color);
     }
+
+    @Override
+    public List<Student> getStudents(Long facultyId) {
+        return facultyRepository.findById(facultyId)
+                .map(Faculty::getStudents)
+                .orElse(null);
+    }
 }
