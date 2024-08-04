@@ -11,12 +11,12 @@ public interface StudentService {
 
     Student update(Long id, Student student);
 
-    void delete(long id);
+    Student delete(Long id);
 
     Collection<Student> getAllStudents();
 
     Collection<Student> filterByAge(int age);
 
 
-    Collection<Student> findByAgeBetween(int minAge, int maxAge);
+    Collection<Student> findAllByAgeBetween(int minAge, int maxAge);
 }

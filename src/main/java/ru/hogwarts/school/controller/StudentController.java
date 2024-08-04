@@ -38,7 +38,7 @@ public class StudentController {
 
 
     @PutMapping("{id}") // PUT http://localhost:8080/students
-    public ResponseEntity<Student> update(@PathVariable Long id, @RequestBody Student student) {
+    public ResponseEntity<Student> update(@RequestBody Student student, @PathVariable Long id) {
         Student editStudent = studentService.update (id,student);
         if (editStudent == null) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<Student> delete(@PathVariable Long id) {
         studentService.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -67,7 +67,7 @@ public class StudentController {
     }
 
     @GetMapping("findStudentAgeBetween")
-    public Collection<Student> findStudentAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
-        return studentService.findByAgeBetween(minAge, maxAge);
+    public Collection<Student> findAllByAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
+        return studentService.findAllByAgeBetween(minAge, maxAge);
     }
 }

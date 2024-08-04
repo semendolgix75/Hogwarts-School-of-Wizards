@@ -33,7 +33,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     public ResponseEntity<Faculty> update(@PathVariable Long id, @RequestBody Faculty faculty) {
         Faculty updateFaculty = facultyService.update(id, faculty);
         if (updateFaculty == null) {
@@ -64,12 +64,12 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.filterByColor(color));
     }
 
-    @GetMapping("nameOrColor")
+    @GetMapping("findNameOrColor")
     public ResponseEntity<Collection<Faculty>> findAllByNameOrColorIgnoreCase(@RequestParam(required = false) String name,
                                                                               @RequestParam(required = false) String color) {
-        if (name != null && !name.isBlank() && (color != null) && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findAllByNameOrColorIgnoreCase(name, color));
+//        if (name != null && !name.isBlank() && (color != null) && !color.isBlank()) {
+           return ResponseEntity.ok(facultyService.findAllByNameIgnoreCaseOrColorIgnoreCase(name, color));
         }
-        return ResponseEntity.ok(facultyService.findAllByNameOrColorIgnoreCase(name, color));
-    }
+//        return ResponseEntity.ok(facultyService.findAllByNameOrColorIgnoreCase(name, color));
+//    }
 }
