@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -11,9 +13,13 @@ public interface StudentService {
 
     Student update(Long id, Student student);
 
-    void delete(long id);
+    Student delete(Long id);
 
     Collection<Student> getAllStudents();
 
     Collection<Student> filterByAge(int age);
+
+
+    Collection<Student> findAllByAgeBetween(int minAge, int maxAge);
+    Faculty getFaculty(Long StudentId);
 }
