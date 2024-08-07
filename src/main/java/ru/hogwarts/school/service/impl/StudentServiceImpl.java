@@ -57,6 +57,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
+
     public Collection<Student> findAllByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findAllByAgeBetween(minAge, maxAge);
     }
@@ -67,6 +68,9 @@ public class StudentServiceImpl implements StudentService {
                 .map(Student::getFaculty)
                 .orElse(null);
 
+    }
+    public Student findStudent(Long id) {
+        return studentRepository.getById(id);
     }
 }
 
