@@ -22,4 +22,6 @@ public interface StudentService {
 
     Collection<Student> findAllByAgeBetween(int minAge, int maxAge);
     Faculty getFaculty(Long StudentId);
+
+    Student findStudent(Long studentId);
 }
