@@ -8,6 +8,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -21,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student create(Student student) {
-
+        student.setId((null));
         return studentRepository.save(student);
     }
     @Override
@@ -75,19 +76,6 @@ public class StudentServiceImpl implements StudentService {
 }
 
 
-//public Collection<Student> getAllStudents() {
-//    return students.values();
-//}
-//
-//public Collection<Student> filterByAge(int age) {
-//
-//    return students.values()
-//            .stream()
-//            .filter(s -> s.getAge() == age)
-//            .collect(Collectors.toList());
 
 
-//
-//}
-//}
 
