@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface StudentService {
     Student create(Student student);
@@ -17,7 +18,7 @@ public interface StudentService {
 
     Collection<Student> getAllStudents();
 
-    Collection<Student> filterByAge(int age);
+    List<Student> filterByAge(int age);
 
 
     Collection<Student> findAllByAgeBetween(int minAge, int maxAge);
