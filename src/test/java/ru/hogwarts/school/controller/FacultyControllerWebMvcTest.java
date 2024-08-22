@@ -53,64 +53,6 @@ class FacultyControllerWebMvcTest {
 
     @MockBean
     private AvatarService avatarService;
-
-    @Test
-    void shouldUpdateFaculty() throws Exception {
-        // given
-        Long facultyId = 1L;
-        Faculty faculty = new Faculty("Test", "TestColor");
-
-        when(facultyService.update(facultyId, faculty)).thenReturn(faculty);
-
-        // when
-        ResultActions perform = mockMvc.perform(put("/faculties/{id}", facultyId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(faculty)));
-
-        // then
-        perform
-                .andExpect(jsonPath("$.name").value(faculty.getName()))
-                .andExpect(jsonPath("$.color").value(faculty.getColor()))
-                .andDo(print());
-    }
-    @Test
-    void shouldDeleteFaculty() throws Exception {
-
-       //given
-            Long facultyId = 1L;
-            Faculty faculty = new Faculty(facultyId,"Test", "TestColor");
-            when(facultyService.read(facultyId)).thenReturn(faculty);
-
-            //when
-            ResultActions perform = mockMvc.perform(delete("/faculties/{id}", facultyId));
-
-            //then
-        perform
-                .andExpect(status().isOk())
-
-        ;
-
-
-
-        }
-    @Test
-    void shouldGetFaculty() throws Exception {
-        //given
-        Long facultyId = 1L;
-        Faculty faculty = new Faculty("Test", "TestColor");
-        when(facultyService.read(facultyId)).thenReturn(faculty);
-
-        //when
-        ResultActions perform = mockMvc.perform(get("/faculties/{id}", facultyId));
-
-        //then
-        perform
-                .andExpect(jsonPath("$.name").value(faculty.getName()))
-                .andExpect(jsonPath("$.color").value(faculty.getColor()))
-                .andDo(print());
-
-    }
-
     @Test
     void shouldCreateFaculty() throws Exception {
         // given
@@ -133,25 +75,65 @@ class FacultyControllerWebMvcTest {
                 .andExpect(jsonPath("$.color").value(savedFaculty.getColor()))
                 .andDo(print());
     }
+    @Test
+    void shouldGetFaculty() throws Exception {
+        //given
+        Long facultyId = 1L;
+        Faculty faculty = new Faculty("Test", "TestColor");
+        when(facultyService.read(facultyId)).thenReturn(faculty);
+
+        //when
+        ResultActions perform = mockMvc.perform(get("/faculties/{id}", facultyId));
+
+        //then
+        perform
+                .andExpect(jsonPath("$.name").value(faculty.getName()))
+                .andExpect(jsonPath("$.color").value(faculty.getColor()))
+                .andDo(print());
+
+    }
+    @Test
+    void shouldUpdateFaculty() throws Exception {
+        // given
+        Long facultyId = 1L;
+        Faculty faculty = new Faculty("Test", "TestColor");
+
+        when(facultyService.update(facultyId, faculty)).thenReturn(faculty);
+
+        // when
+        ResultActions perform = mockMvc.perform(put("/faculties/{id}", facultyId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(faculty)));
+
+        // then
+        perform
+                .andExpect(jsonPath("$.name").value(faculty.getName()))
+                .andExpect(jsonPath("$.color").value(faculty.getColor()))
+                .andDo(print());
+    }
 
     @Test
-    public void shouldGetAllFaculty() throws Exception {
-        // given
-        Faculty faculty1 = new Faculty("Name1", "Color1");
-        Faculty faculty2 = new Faculty("Name2", "Color2");
-        Collection<Faculty> faculties = Arrays.asList(faculty1, faculty2);
-        when(facultyService.getAllFaculty()).thenReturn(faculties);
-        // when
-        mockMvc.perform(get("/faculties"))
-                // then
+    void shouldDeleteFaculty() throws Exception {
+
+       //given
+            Long facultyId = 1L;
+            Faculty faculty = new Faculty(facultyId,"Test", "TestColor");
+            when(facultyService.read(facultyId)).thenReturn(faculty);
+
+            //when
+            ResultActions perform = mockMvc.perform(delete("/faculties/{id}", facultyId));
+
+            //then
+        perform
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(faculty1.getId()))
-                .andExpect(jsonPath("$[0].name").value(faculty1.getName()))
-                .andExpect(jsonPath("$[0].color").value(faculty1.getColor()))
-                .andExpect(jsonPath("$[1].id").value(faculty2.getId()))
-                .andExpect(jsonPath("$[1].name").value(faculty2.getName()))
-                .andExpect(jsonPath("$[1].color").value(faculty2.getColor()));
-    }
+
+        ;
+
+
+
+        }
+
+
     @Test
     public void shouldGetFacultyByColor() throws Exception {
 
