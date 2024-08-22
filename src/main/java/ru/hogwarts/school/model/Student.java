@@ -7,7 +7,8 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "generatorStudentId")
     private Long id;
     private  String name;
     private int age;
