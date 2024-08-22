@@ -7,7 +7,8 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "generatorStudentId")
     private Long id;
     private  String name;
     private int age;
@@ -15,6 +16,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
 
     public Faculty getFaculty() {
         return faculty;
@@ -47,6 +49,10 @@ public class Student {
     }
     public Student(Long id, String name, int age) {
         this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+    public Student(String name, int age) {
         this.name = name;
         this.age = age;
     }
