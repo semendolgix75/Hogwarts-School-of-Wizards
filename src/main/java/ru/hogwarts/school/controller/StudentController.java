@@ -59,8 +59,23 @@ public class StudentController {
         return studentService.findAllByAgeBetween(minAge, maxAge);
     }
 
-    @GetMapping("{id}/faculty") // GET http://localhost:8080/students/1
+    @GetMapping("{id}/faculty") // GET http://localhost:8080/students/{id}/faculty
     public Faculty getFaculty(@PathVariable Long id) {
         return studentService.getFaculty(id);
+    }
+
+    @GetMapping("countStudent") // GET http://localhost:8080/getCountStudent
+    public Integer getCountAllStudent() {
+        return studentService.getAllStudentCount();
+    }
+
+    @GetMapping("averageAgeStudent") // GET http://localhost:8080/getCountStudent
+    public Double getAverageAgeStudent() {
+        return studentService.getAverageAgeStudent();
+    }
+
+    @GetMapping("lastFiveByIdStudent") // GET http://localhost:8080/getCountStudent
+    public List<Student> getLastFiveByIdStudent() {
+        return studentService.getLastFiveByIdStudent();
     }
 }

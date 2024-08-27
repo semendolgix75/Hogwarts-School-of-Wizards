@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("avatars")
@@ -61,4 +62,12 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
+//    Добавьте пагинацию в контроллер в AvatarController,
+//    чтобы можно было получать списки аватарок постранично.
+    @GetMapping(value = "allAvatar")
+    public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam("page") Integer page,@RequestParam("size") Integer size) {
+        List<Avatar> avatars=avatarService.getAllAvatarPaginated(page,size);
+        return ResponseEntity.ok(avatars);
+    }
+    ;
 }
