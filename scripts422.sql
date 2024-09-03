@@ -10,10 +10,10 @@ create table public.human (
     name varchar(255),       --Имя текст (до 255 символов)
     age integer not null,            -- возраст должен не нулевой,
     has_license boolean,    -- признак того, что у него есть права
-    car_id integer references car(id)   -- внешний ключ на таблицу car
+    car_id integer references public.car(id)   -- внешний ключ на таблицу car
 );
 
-create table car (
+create table public.car (
     id serial primary key,  --id машины уникальный
     brand varchar(255),      --марка машины до 255 символов
     model varchar(255),      --модель машины до 255 символов
