@@ -1,10 +1,13 @@
 package ru.hogwarts.school.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.controller.InfoController;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.AvatarRepository;
@@ -22,9 +25,11 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
     private final int BUFFER_SIZE = 1024;
+//    private final Logger logger = (Logger) LoggerFactory.getLogger(AvatarServiceImpl.class);
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
@@ -36,6 +41,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        Logger logger =  LoggerFactory.getLogger(InfoController.class);
         Student student = studentRepository
                 .findById(studentId)
                 .orElseThrow(() ->
@@ -43,6 +49,7 @@ public class AvatarServiceImpl implements AvatarService {
                 );
         Path avatarPath = saveToLocalDirectory(student, avatarFile);
         Avatar avatar = saveToDb(student, avatarPath, avatarFile);
+        logger.info("Отработал метод uploadAvatar");
 
         return avatar;
     }

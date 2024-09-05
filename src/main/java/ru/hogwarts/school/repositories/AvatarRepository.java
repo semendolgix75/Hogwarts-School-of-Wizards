@@ -10,7 +10,5 @@ import java.util.Optional;
 public interface AvatarRepository extends JpaRepository<Avatar,Long> {
     Optional<Avatar> findByStudent_id(long studentId);
 
-//    @Query(value = "SELECT * from Avatar OFFSET ",nativeQuery = true)
-//    Integer getAllStudentCount();
 
 }
