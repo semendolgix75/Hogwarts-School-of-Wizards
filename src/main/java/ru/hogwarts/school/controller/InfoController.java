@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//Создать контроллер InfoController. Добавить в него один эндпоинт GET /port.
 @RestController
 public class InfoController {
     Logger logger =  LoggerFactory.getLogger(InfoController.class);
