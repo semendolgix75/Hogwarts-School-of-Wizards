@@ -10,13 +10,14 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
 
     private final StudentRepository studentRepository;
-        private final Logger logger =  LoggerFactory.getLogger(StudentServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -29,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
         return studentRepository.save(student);
     }
+
     @Override
     public Student read(Long id) {
 
@@ -40,18 +42,18 @@ public class StudentServiceImpl implements StudentService {
     public Student update(Long id, Student student) {
 
         logger.info("Отработал метод 'update'");
-        return studentRepository.findById(id).map(studentFromDb ->{
+        return studentRepository.findById(id).map(studentFromDb -> {
             studentFromDb.setName((student.getName()));
             studentFromDb.setAge((student.getAge()));
             return studentFromDb;
-        } ).orElse(null);
+        }).orElse(null);
     }
 
     @Override
     public Student delete(Long id) {
 
         logger.info("Отработал метод 'delete'");
-        return studentRepository.findById(id).map(student-> {
+        return studentRepository.findById(id).map(student -> {
             studentRepository.deleteById(id);
             return student;
         }).orElse(null);
@@ -87,6 +89,7 @@ public class StudentServiceImpl implements StudentService {
                 .orElse(null);
 
     }
+
     public Student findStudent(Long id) {
 
         logger.info("Отработал метод 'findStudent'");
@@ -115,22 +118,36 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-
     //    Добавить эндпоинт для получения всех имен всех студентов, чье имя начинается с буквы А.
+//    В ответе должен находиться отсортированный в алфавитном порядке список с именами в верхнем регистре.
+//    Для получения всех студентов из базы использовать метод репозитория - findAll().
     @Override
-    public List<Student> getAllStudentNameBeginWithLetterA() {
-//
-        logger.info("Отработал метод 'getNameStudentBeginWithLetterA'");
+    public List<String> getAllStudentNameBeginWithLetterA() {
+
+        logger.info("Отработал метод для получения всех имен всех студентов, чье имя начинается с буквы А");
         return studentRepository.findAll()
                 .stream()
-                .filter(student -> student.getName()
-                        .toUpperCase()
-                        .startsWith("A"))
-                        .sorted()
-                        .toList();
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(name -> name.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
 
     }
 
+    //    Создать эндпоинт, который будет возвращать средний возраст всех студентов.
+//    Для получения информации о всех студентах опять же следует использовать метод репозитория - findAll().
+    @Override
+    public Double getAverageAgeAllStudentStream() {
+//
+        logger.info("Отработал метод , который будет возвращать средний возраст всех студентов.");
+        return studentRepository.findAll()
+                .stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0);
+
+    }
 }
 
 
