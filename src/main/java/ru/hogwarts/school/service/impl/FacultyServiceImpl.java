@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class FacultyServiceImpl implements FacultyService {
     private final FacultyRepository facultyRepository;
+
+
     private final Logger logger =  LoggerFactory.getLogger(FacultyServiceImpl.class);
     public FacultyServiceImpl(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -22,16 +24,19 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty create(Faculty faculty) {
+
         logger.info("Отработал метод 'createFaculty'");
         return facultyRepository.save(faculty);
     }
     @Override
     public Faculty read(Long id) {
+
         logger.info("Отработал метод 'readFaculty'");
         return facultyRepository.findById(id).orElse(null);
     }
     @Override
     public Faculty update(Long id, Faculty faculty) {
+
         logger.info("Отработал метод 'updateFaculty'");
         return facultyRepository.findById(id).map(facultyFromDb->{
             facultyFromDb.setName(facultyFromDb.getName());
@@ -43,6 +48,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty delete(Long id) {
+
         logger.info("Отработал метод 'deleteFaculty'");
         return facultyRepository.findById(id).map(faculty-> {
             facultyRepository.deleteById(id);
@@ -50,20 +56,14 @@ public class FacultyServiceImpl implements FacultyService {
         }).orElse(null);
     }
     public Collection<Faculty> getAllFaculty() {
+
         logger.info("Отработал метод 'getAllFaculty'");
         return facultyRepository.findAll();
     }
-//    public Collection<Faculty> filterByColor(String color) {
-//
-//        return getAllFaculty()
-//                .stream()
-//                .filter(faculty -> faculty.getColor().equals(color))
-//                .collect(Collectors.toList());
-//
-//    }
+
 @Override
     public List<Faculty> filterByColor(String color) {
-    logger.info("Отработал метод 'filterByColor'");
+        logger.info("Отработал метод 'filterByColor'");
         return facultyRepository.findAllByColor(color);
     }
 
@@ -75,7 +75,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public List<Student> getStudents(Long facultyId) {
-        logger.info("Отработал метод 'getStudentsByFaculty'");
+                logger.info("Отработал метод 'getStudentsByFaculty'");
         return facultyRepository.findById(facultyId)
                 .map(Faculty::getStudents)
                 .orElse(null);

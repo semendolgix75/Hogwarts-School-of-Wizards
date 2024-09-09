@@ -18,6 +18,8 @@ public class InfoController {
         return serverPort;
     }
 
+
+
 //    java -jar school-0.0.1-SNAPSHOT.jar
 //    java -jar -Dspring.profiles.active=test school-0.0.1-SNAPSHOT.jar
 }

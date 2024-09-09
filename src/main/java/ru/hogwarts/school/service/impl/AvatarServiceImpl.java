@@ -49,6 +49,7 @@ public class AvatarServiceImpl implements AvatarService {
                 );
         Path avatarPath = saveToLocalDirectory(student, avatarFile);
         Avatar avatar = saveToDb(student, avatarPath, avatarFile);
+
         logger.info("Отработал метод uploadAvatar");
 
         return avatar;
@@ -56,6 +57,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long avatarId) {
+
         logger.info("Отработал метод findAvatar");
         return avatarRepository.findById(avatarId).orElseThrow(() ->
                 new IllegalArgumentException("Avatar with id " + avatarId + " is not found in database")
@@ -67,6 +69,7 @@ public class AvatarServiceImpl implements AvatarService {
     // чтобы можно было получать списки аватарок постранично
     @Override
     public List<Avatar> getAllAvatarPaginated(int pageNumber, int pageSize) {
+
         logger.info("Отработал метод getAllAvatarPaginated");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
@@ -74,6 +77,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     private String getExtensions(String fileName)
     {
+
         logger.info("Отработал метод getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
@@ -91,6 +95,7 @@ public class AvatarServiceImpl implements AvatarService {
         ) {
             bis.transferTo(bos);
         }
+
         logger.info("Отработал метод saveToLocalDirectory");
 
         return avatarPath;
@@ -103,11 +108,13 @@ public class AvatarServiceImpl implements AvatarService {
 
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
+
         logger.info("Отработал метод saveToDb");
         return avatarRepository.save(avatar);
     }
 
     private Avatar getAvatarByStudentId(long studentId) {
+
         logger.info("Отработал метод getAvatarByStudentId");
 
         return avatarRepository.findByStudent_id(studentId)
