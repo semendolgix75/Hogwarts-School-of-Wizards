@@ -78,4 +78,9 @@ public class StudentController {
     public List<Student> getLastFiveByIdStudent() {
         return studentService.getLastFiveByIdStudent();
     }
+
+    @GetMapping("nameBeginWithA") // GET http://GET http://localhost:8080/students/StudentnameBeginWithA
+    public List<Student> getAllStudentNameBeginWithLetterA() {
+        return studentService.getAllStudentNameBeginWithLetterA();
+    }
 }

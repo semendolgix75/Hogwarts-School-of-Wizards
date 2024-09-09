@@ -3,7 +3,6 @@ package ru.hogwarts.school.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.controller.InfoController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -11,7 +10,6 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -114,6 +112,23 @@ public class StudentServiceImpl implements StudentService {
 
         logger.info("Отработал метод 'getLastFiveByIdStudent'");
         return studentRepository.getLastFiveByIdStudent();
+    }
+
+
+
+    //    Добавить эндпоинт для получения всех имен всех студентов, чье имя начинается с буквы А.
+    @Override
+    public List<Student> getAllStudentNameBeginWithLetterA() {
+//
+        logger.info("Отработал метод 'getNameStudentBeginWithLetterA'");
+        return studentRepository.findAll()
+                .stream()
+                .filter(student -> student.getName()
+                        .toUpperCase()
+                        .startsWith("A"))
+                        .sorted()
+                        .toList();
+
     }
 
 }

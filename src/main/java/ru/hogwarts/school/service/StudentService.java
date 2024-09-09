@@ -30,4 +30,6 @@ public interface StudentService {
     Double getAverageAgeStudent();
 
     List<Student> getLastFiveByIdStudent();
+
+    List<Student> getAllStudentNameBeginWithLetterA();
 }
