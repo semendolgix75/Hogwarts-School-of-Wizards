@@ -1,10 +1,13 @@
 package ru.hogwarts.school.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.controller.InfoController;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.AvatarRepository;
@@ -22,9 +25,11 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
     private final int BUFFER_SIZE = 1024;
+    private final Logger logger =  LoggerFactory.getLogger(AvatarServiceImpl.class);
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
@@ -36,6 +41,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+
         Student student = studentRepository
                 .findById(studentId)
                 .orElseThrow(() ->
@@ -44,11 +50,15 @@ public class AvatarServiceImpl implements AvatarService {
         Path avatarPath = saveToLocalDirectory(student, avatarFile);
         Avatar avatar = saveToDb(student, avatarPath, avatarFile);
 
+        logger.info("Отработал метод uploadAvatar");
+
         return avatar;
     }
 
     @Override
     public Avatar findAvatar(Long avatarId) {
+
+        logger.info("Отработал метод findAvatar");
         return avatarRepository.findById(avatarId).orElseThrow(() ->
                 new IllegalArgumentException("Avatar with id " + avatarId + " is not found in database")
         );
@@ -59,15 +69,21 @@ public class AvatarServiceImpl implements AvatarService {
     // чтобы можно было получать списки аватарок постранично
     @Override
     public List<Avatar> getAllAvatarPaginated(int pageNumber, int pageSize) {
+
+        logger.info("Отработал метод getAllAvatarPaginated");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
 
-    private String getExtensions(String fileName) {
+    private String getExtensions(String fileName)
+    {
+
+        logger.info("Отработал метод getExtensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    private Path saveToLocalDirectory(Student student, MultipartFile avatarFile) throws IOException {
+    private Path saveToLocalDirectory(Student student, MultipartFile avatarFile) throws IOException
+    {
         Path avatarPath = Path.of(avatarsDir, "student" + student.getId() + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(avatarPath.getParent());
         Files.deleteIfExists(avatarPath);
@@ -79,6 +95,9 @@ public class AvatarServiceImpl implements AvatarService {
         ) {
             bis.transferTo(bos);
         }
+
+        logger.info("Отработал метод saveToLocalDirectory");
+
         return avatarPath;
     }
 
@@ -89,10 +108,15 @@ public class AvatarServiceImpl implements AvatarService {
 
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
+
+        logger.info("Отработал метод saveToDb");
         return avatarRepository.save(avatar);
     }
 
     private Avatar getAvatarByStudentId(long studentId) {
+
+        logger.info("Отработал метод getAvatarByStudentId");
+
         return avatarRepository.findByStudent_id(studentId)
                 .orElse(new Avatar());
 
