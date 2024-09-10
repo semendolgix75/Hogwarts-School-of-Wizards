@@ -30,4 +30,10 @@ public interface StudentService {
     Double getAverageAgeStudent();
 
     List<Student> getLastFiveByIdStudent();
+
+    List<String> getAllStudentNameBeginWithLetterA();
+
+    //    Создать эндпоинт, который будет возвращать средний возраст всех студентов.
+    //    Для получения информации о всех студентах опять же следует использовать метод репозитория - findAll().
+    Double getAverageAgeAllStudentStream();
 }

@@ -78,4 +78,14 @@ public class StudentController {
     public List<Student> getLastFiveByIdStudent() {
         return studentService.getLastFiveByIdStudent();
     }
+
+    @GetMapping("nameBeginWithA") // GET http://GET http://localhost:8080/students/nameBeginWithA
+    public List<String> getAllStudentNameBeginWithLetterA() {
+        return studentService.getAllStudentNameBeginWithLetterA();
+    }
+
+    @GetMapping("averageAgeAllStudentStream") // GET http://GET http://localhost:8080/students/averageAgeAllStudentStrean
+    public Double getAverageAgeAllStudent() {
+        return studentService.getAverageAgeAllStudentStream();
+    }
 }

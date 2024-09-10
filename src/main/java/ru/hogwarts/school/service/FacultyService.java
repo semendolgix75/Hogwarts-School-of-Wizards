@@ -23,4 +23,7 @@ public interface FacultyService {
     Collection<Faculty> findAllByNameIgnoreCaseOrColorIgnoreCase(String name, String color);
 
     List<Student> getStudents(Long facultyId);
+
+    //    Создать эндпоинт, который будет возвращать самое длинное название факультета.
+    String getLongNameFaculty();
 }

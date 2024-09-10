@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("faculties")
 public class FacultyController {
     private final FacultyService facultyService;
-    private final Logger logger =  LoggerFactory.getLogger(InfoController.class);
+    private final Logger logger = LoggerFactory.getLogger(InfoController.class);
 
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
@@ -72,14 +72,17 @@ public class FacultyController {
     @GetMapping("findNameOrColor")
     public ResponseEntity<Collection<Faculty>> findAllByNameOrColorIgnoreCase(@RequestParam(required = false) String name,
                                                                               @RequestParam(required = false) String color) {
-           return ResponseEntity.ok(facultyService.findAllByNameIgnoreCaseOrColorIgnoreCase(name, color));
-        }
+        return ResponseEntity.ok(facultyService.findAllByNameIgnoreCaseOrColorIgnoreCase(name, color));
+    }
 
-@GetMapping("{id}/students")
-public List<Student> getStudents(@PathVariable Long id) {
-    return facultyService.getStudents(id);
-}
+    @GetMapping("{id}/students")
+    public List<Student> getStudents(@PathVariable Long id) {
+        return facultyService.getStudents(id);
+    }
 
-
+    @GetMapping("longNameFaculty")
+    public String getLongNameFaculty() {
+        return facultyService.getLongNameFaculty();
+    }
 }
 
