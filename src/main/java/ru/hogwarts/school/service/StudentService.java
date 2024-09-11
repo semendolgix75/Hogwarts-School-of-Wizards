@@ -36,4 +36,6 @@ public interface StudentService {
     //    Создать эндпоинт, который будет возвращать средний возраст всех студентов.
     //    Для получения информации о всех студентах опять же следует использовать метод репозитория - findAll().
     Double getAverageAgeAllStudentStream();
+
+    void printAllStudentsInParallelMode();
 }

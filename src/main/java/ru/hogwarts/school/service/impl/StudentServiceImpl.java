@@ -148,6 +148,30 @@ public class StudentServiceImpl implements StudentService {
                 .orElse(0);
 
     }
+
+    @Override
+    public void printAllStudentsInParallelMode() {
+        List<Student> students = studentRepository.findAll();
+        logger.info("Запущен метод printAllStudentsInParallelMode");
+        System.out.println("Поток main");
+        System.out.println("Первый студент-" + students.get(0).getName());
+        System.out.println("Второй студент-" + students.get(1).getName());
+
+        System.out.println("Поток 1");
+        new Thread(() -> {
+            synchronized (this) {
+                System.out.println("Третий студент-" + students.get(2).getName());
+                System.out.println("Четвертый студент-" + students.get(3).getName());
+            }
+        }).start();
+        System.out.println("Поток 2");
+        new Thread(() -> {
+            synchronized (this) {
+                System.out.println("Пятый студент-" + students.get(4).getName());
+                System.out.println("Шестой студент-" + students.get(5).getName());
+            }
+        }).start();
+    }
 }
 
 

@@ -84,8 +84,15 @@ public class StudentController {
         return studentService.getAllStudentNameBeginWithLetterA();
     }
 
-    @GetMapping("averageAgeAllStudentStream") // GET http://GET http://localhost:8080/students/averageAgeAllStudentStrean
+    @GetMapping("averageAgeAllStudentStream") // GET http://GET http://localhost:8080/students/averageAgeAllStudentStream
     public Double getAverageAgeAllStudent() {
         return studentService.getAverageAgeAllStudentStream();
+    }
+//
+//
+//    Создать в StudentController эндпоинт GET /students/print-parallel.
+    @GetMapping("print-parallel") // GET http://GET http://localhost:8080/students/print-parallel
+    public void printAllStudentsInParallelMode() {
+        studentService.printAllStudentsInParallelMode();
     }
 }
