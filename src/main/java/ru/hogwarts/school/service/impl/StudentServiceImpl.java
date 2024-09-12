@@ -18,6 +18,8 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    int count=0;
+    public final Object flag = new Object();
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -148,7 +150,74 @@ public class StudentServiceImpl implements StudentService {
                 .orElse(0);
 
     }
+
+    //    Эндпоинт должен выводить в консоль имена всех студентов в параллельном режиме, а именно:
+//    первые два имени вывести в основном потоке
+//    имена третьего и четвертого студента вывести в параллельном потоке
+//    имена пятого и шестого студента вывести в еще одном параллельном потоке.
+//    Для вывода используйте команду System.out.println().
+
+
+@Override
+    public void printAllStudentsInParallelMode() {
+
+        List<Student> students = studentRepository.findAll();
+        logger.info("Запущен метод printAllStudentsInParallelMode");
+        System.out.println("Поток main");
+        System.out.println(students.get(0).getName());
+        System.out.println(students.get(1).getName());
+        Thread t1 = new Thread(() -> {
+            {
+                System.out.println(students.get(2).getName());
+                System.out.println(students.get(3).getName());
+                ;
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            {
+                System.out.println(students.get(4).getName());
+                System.out.println(students.get(5).getName());
+            }
+        });
+        System.out.println("Поток 1");
+        t1.start();
+        System.out.println("Поток 2");
+        t2.start();
+    }
+
+@Override
+    public void printAllStudentsInSyncMode() {
+        List<Student> students = studentRepository.findAll();
+        logger.info("Запущен метод printAllStudentsInSyncMode");
+        System.out.println("Поток main");
+        printSteam(students.get(0));
+        printSteam(students.get(1));
+        new Thread(() -> {
+            {
+                printSteam(students.get(2));
+                printSteam(students.get(3));
+
+            }
+        }).start();
+        new Thread(() -> {
+            {
+                printSteam(students.get(4));
+                printSteam(students.get(5));
+            }
+        }).start();
+
+
+    }
+
+@Override
+    public void printSteam(Student student) {
+        synchronized (flag) {
+            System.out.println(count+" "+student.getName());
+            count++;
+        }
+    }
 }
+
 
 
 

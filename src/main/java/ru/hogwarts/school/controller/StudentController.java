@@ -40,13 +40,15 @@ public class StudentController {
 
 
     @PutMapping("{id}") // PUT http://localhost:8080/students
-    public Student update(@PathVariable Long id,@RequestBody Student student) {
+    public Student update(@PathVariable Long id, @RequestBody Student student) {
 
         return studentService.update(id, student);
     }
 
     @DeleteMapping("{id}")
-    public Student delete(@PathVariable Long id) {return studentService.delete(id); }
+    public Student delete(@PathVariable Long id) {
+        return studentService.delete(id);
+    }
 
     @GetMapping
     public ResponseEntity<Collection<Student>> getAllStudents() {
@@ -79,13 +81,29 @@ public class StudentController {
         return studentService.getLastFiveByIdStudent();
     }
 
-    @GetMapping("nameBeginWithA") // GET http://GET http://localhost:8080/students/nameBeginWithA
+    @GetMapping("nameBeginWithA")           // GET http://GET http://localhost:8080/students/nameBeginWithA
     public List<String> getAllStudentNameBeginWithLetterA() {
         return studentService.getAllStudentNameBeginWithLetterA();
     }
 
-    @GetMapping("averageAgeAllStudentStream") // GET http://GET http://localhost:8080/students/averageAgeAllStudentStrean
+    @GetMapping("averageAgeAllStudentStream")       //GET http://localhost:8080/students/averageAgeAllStudentStream
     public Double getAverageAgeAllStudent() {
         return studentService.getAverageAgeAllStudentStream();
+    }
+
+    //
+//
+//    Создать в StudentController эндпоинт GET /students/print-parallel.
+    @GetMapping("print-parallel")               //GET http://localhost:8080/students/print-parallel
+    public void printAllStudentsInParallelMode() {
+        studentService.printAllStudentsInParallelMode();
+    }
+
+
+    //    Создать в StudentController эндпоинт GET /students/print-synchronized.
+//    Эндпоинт должен выводить в консоль имена всех студентов в синхронном режиме.
+    @GetMapping("print-synchronized") ///GET http://localhost:8080/students/print-synchronized"
+    public void printAllStudentsInSyncMode() {
+        studentService.printAllStudentsInSyncMode();
     }
 }
