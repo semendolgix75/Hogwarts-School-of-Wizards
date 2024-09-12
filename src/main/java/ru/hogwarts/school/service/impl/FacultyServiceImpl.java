@@ -87,13 +87,11 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public String getLongNameFaculty() {
         logger.info("Отработал метод , который будет возвращать самое длинное название факультета.");
-        String longName = facultyRepository.findAll()
+        return facultyRepository.findAll()
                 .stream()
                 .map(Faculty::getName)
                 .max(Comparator.comparing(String::length))
                 .orElse("");
-        System.out.println("longName = " + longName);
-        return longName;
 
     }
 }
