@@ -38,4 +38,8 @@ public interface StudentService {
     Double getAverageAgeAllStudentStream();
 
     void printAllStudentsInParallelMode();
+
+    void printAllStudentsInSyncMode();
+
+    void printSteam(Student student);
 }
